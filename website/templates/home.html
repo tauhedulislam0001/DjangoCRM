@@ -2,10 +2,47 @@
 {% block title %}Welcome{% endblock  %}
 {% block content %}
 
-<div class="col-md-6 offset-md-3 mt-5">
+<div class="col-md-12 mt-5">
     {% if user.is_authenticated %}
         <h1>Django CRM Project</h1>
+
+        <Center><b>Records</b></Center>
+        <hr>
+
+        <table class="table table-responsive table-hover table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col">ID</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% if records %}
+                    {% for record in records %}
+                        <tr>
+                            <td><a href="{% url 'record' record.id %}">{{record.first_name}}</a></td>
+                            <td>{{record.last_name}}</td>
+                            <td>{{record.email}}</td>
+                            <td>{{record.phone}}</td>
+                            <td>{{record.address}}</td>
+                            <td>{{record.city}}</td>
+                            <td>{{record.state}}</td>
+                            <td>{{record.zipcode}}</td>
+                            <th scope="row"><a href="{% url 'record' record.id %}">{{record.id}}</a></th>
+                        </tr>
+                    {% endfor  %}
+                {% endif %}
+            </tbody>
+          </table>
     {% else %}
+    <div class="col-md-6 offset-md-3 mt-5">
         <h1>Login</h1>
         <br>
         <form action="{% url 'home' %}" method="POST">
@@ -18,6 +55,7 @@
             </div><br>
             <button type="submit" class="btn btn-secondary">Login</button>
         </form>
+    </div>
     {% endif  %}
 </div>
 
